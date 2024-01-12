@@ -1,0 +1,11 @@
+{
+  "name": "monorepo",
+  "packageManager": "yarn@4.0.2",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "yarn workspaces foreach -A -p -v run dev"
+  }
+}
