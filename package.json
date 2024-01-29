@@ -6,6 +6,8 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "yarn workspaces foreach -A -p -v -i run dev"
+    "dev": "yarn workspaces foreach -A -p -v -i run dev",
+    "build": "yarn workspaces foreach -A -v -i run build",
+    "start": "yarn workspaces foreach -A -p -v -i run start"
   }
 }

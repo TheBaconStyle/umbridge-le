@@ -1,15 +1,15 @@
 import { INestApplication, Injectable } from '@nestjs/common'
-import { initTRPC } from '@trpc/server'
+import { router } from '@server/trpc/trpc.config'
+import { UserService } from '@server/user/user.service'
 import * as trpcExpress from '@trpc/server/adapters/express'
 
 @Injectable()
 export class AppService {
-  trpc = initTRPC.create()
-  procedure = this.trpc.procedure
-  router = this.trpc.router
-  mergeRouters = this.trpc.mergeRouters
+  constructor(private readonly userService: UserService) {}
 
-  appRouter = this.trpc.router({})
+  appRouter = router({
+    // users: this.userService.userRouter,
+  })
 
   async applyMiddleware(app: INestApplication) {
     app.use(

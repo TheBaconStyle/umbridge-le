@@ -1,11 +1,15 @@
-import { TypeOrmModule } from '@nestjs/typeorm'
 import { Logger, Module, OnApplicationBootstrap } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { UserModule } from '@server/user/user.module'
+import { existsSync } from 'fs'
 import { AppService } from './app.service'
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath: '.env.local' }),
+    ConfigModule.forRoot({
+      envFilePath: existsSync('.env.local') ? '.env.local' : '.env',
+    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -14,9 +18,10 @@ import { AppService } from './app.service'
         database: configService.getOrThrow('DB_URL'),
         entities: [configService.getOrThrow('DB_ENTITIES')],
         migrations: [configService.getOrThrow('DB_MIGRATIONS')],
-        synchronize: configService.get('DB_SYNC') === 'true',
+        synchronize: configService.getOrThrow('DB_SYNC') === 'true',
       }),
     }),
+    UserModule,
   ],
   providers: [AppService],
 })
@@ -27,7 +32,7 @@ export class AppModule implements OnApplicationBootstrap {
 
   onApplicationBootstrap() {
     this.logger.log(
-      `Server will start at http://localhost:${this.config.get('PORT')}`,
+      `Server will start at http://localhost:${this.config.getOrThrow('PORT')}`,
     )
   }
 }

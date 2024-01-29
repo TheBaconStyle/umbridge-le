@@ -10,6 +10,8 @@
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
     "paths": {
       "@server/*": ["./packages/backend/src/*"],
       "@web/*": ["./packages/frontend/src/*"]

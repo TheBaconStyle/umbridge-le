@@ -1,6 +1,13 @@
-import { trpc } from "@web/api"
+"use client"
 
-export default async function Home() {
-  const { greeting } = await trpc.hello.query({ name: "my new architecture" })
-  return <div>{greeting}</div>
+import { crtUsr } from "@web/actions"
+
+export default function Home() {
+  return (
+    <div>
+      <button onClick={async () => console.log(await crtUsr())}>
+        create user
+      </button>
+    </div>
+  )
 }
