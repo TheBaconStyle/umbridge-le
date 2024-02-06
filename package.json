@@ -8,6 +8,11 @@
   "scripts": {
     "dev": "yarn workspaces foreach -A -p -v -i run dev",
     "build": "yarn workspaces foreach -A -v -i run build",
-    "start": "yarn workspaces foreach -A -p -v -i run start"
+    "start": "yarn workspaces foreach -A -p -v -i run start",
+    "build:backend": "yarn workspace backend build",
+    "build:frontend": "yarn workspace frontend build",
+    "db-migration:generate": "yarn workspace backend migration:generate",
+    "db-migration:run": "yarn workspace backend migration:run",
+    "db-migration:create": "yarn workspace backend migration:create"
   }
 }
