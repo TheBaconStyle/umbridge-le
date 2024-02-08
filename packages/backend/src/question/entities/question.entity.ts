@@ -13,7 +13,7 @@ export class Question {
   type: (typeof questionTypeVariants)[number]
 
   @Column('jsonb', { nullable: true })
-  variants: string[] | Record<string, string>
+  variants?: string[]
 
   @Column('jsonb')
   answer: string | number[] | number | Record<string, string>

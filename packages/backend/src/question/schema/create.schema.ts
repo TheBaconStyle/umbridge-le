@@ -17,7 +17,7 @@ const JSONObjectSchema = z.object({}).refine((data) => {
 export const createQuestionSchema = z.object({
   text: z.string(),
   type: z.enum(questionTypeVariants),
-  variants: z.union([JSONObjectSchema, z.array(z.string())]),
+  variants: z.union([z.array(z.string()), z.undefined()]),
   answer: z.union([
     z.string(),
     z.number(),

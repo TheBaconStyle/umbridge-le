@@ -1,67 +1,56 @@
 "use client"
 
 import { DarkMode, LightMode, SettingsBrightness } from "@mui/icons-material"
-import {
-  CircularProgress,
-  IconButton,
-  Menu,
-  MenuItem,
-  Tooltip,
-  useColorScheme,
-} from "@mui/material"
-import { setTheme } from "@web/actions"
+import { IconButton, Menu, MenuItem, PaletteMode, Tooltip } from "@mui/material"
+import { useTheme } from "next-themes"
 import { useRef } from "react"
-import { useBoolean, useIsClient } from "usehooks-ts"
+import { TernaryDarkMode, useBoolean, useTernaryDarkMode } from "usehooks-ts"
 
-const modeItems = [
-  { key: "light", value: "Светлая" },
-  { key: "system", value: "Как в системе" },
-  { key: "dark", value: "Темная" },
+const themeModes = [
+  ["light", "Светлая"],
+  ["system", "Как в системе"],
+  ["dark", "Темная"],
 ]
 
-export function ThemeSwitch() {
-  // const { mode, setMode } = useColorScheme()
-  // const isClient = useIsClient()
-  // const rootRef = useRef(null)
-  // const { value: isMenuOpen, toggle: toggleMenu } = useBoolean()
+export type TThemeSwitch = {
+  currentTheme: PaletteMode
+}
+
+export function ThemeSwitch({ currentTheme }: TThemeSwitch) {
+  const { theme, setTheme } = useTheme()
+  const { value: isMenuOpen, toggle: toggleMenu } = useBoolean()
+  const rootRef = useRef(null)
   return (
     <>
       <Tooltip title="Тема оформления">
         <IconButton
-          // sx={{ color: "inherit" }}
-          // onClick={toggleMenu}
-          // ref={rootRef}
-          onClick={() => setTheme("light")}
+          sx={{ color: "inherit" }}
+          onClick={toggleMenu}
+          ref={rootRef}
         >
-          {/* {isClient && (
-            <>
-              {mode === "light" && <LightMode />}
-              {mode === "dark" && <DarkMode />}
-              {mode === "system" && <SettingsBrightness />}
-            </>
-          )}
-          {!isClient && <CircularProgress color="inherit" size={30} />} */}
-          <LightMode />
+          {currentTheme === "light" && <LightMode />}
+          {currentTheme === "dark" && <DarkMode />}
         </IconButton>
       </Tooltip>
 
-      {/* <Menu anchorEl={rootRef.current} open={isMenuOpen} onClose={toggleMenu}>
-        {modeItems.map((modeItem) => (
+      <Menu anchorEl={rootRef.current} open={isMenuOpen} onClose={toggleMenu}>
+        {themeModes.map(([themeKey, label]) => (
           <MenuItem
-            selected={mode === modeItem.key}
+            selected={theme === themeKey}
             onClick={() => {
-              setMode(modeItem.key as Exclude<typeof mode, undefined>)
+              setTheme(themeKey)
               toggleMenu()
             }}
-            key={modeItem.key}
+            key={themeKey}
           >
-            {modeItem.key === "light" && <LightMode />}
-            {modeItem.key === "dark" && <DarkMode />}
-            {modeItem.key === "system" && <SettingsBrightness />}
-            &nbsp;{modeItem.value}
+            {themeKey === "light" && <LightMode />}
+            {themeKey === "dark" && <DarkMode />}
+            {themeKey === "system" && <SettingsBrightness />}
+            &nbsp;
+            {label}
           </MenuItem>
         ))}
-      </Menu> */}
+      </Menu>
     </>
   )
 }

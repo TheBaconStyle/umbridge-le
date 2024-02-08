@@ -1,13 +1,12 @@
 "use client"
 
-import { Experimental_CssVarsProvider as CSSVarsProvider } from "@mui/material"
+import { ThemeProvider } from "next-themes"
+import { ThemeProviderProps } from "next-themes/dist/types"
 import { PropsWithChildren } from "react"
-import { lightTheme } from "./theme"
 
-export function ThemeProvider({ children }: PropsWithChildren) {
-  // return (
-  //   <CSSVarsProvider theme={lightTheme} defaultMode="system">
-  //     {children}
-  //   </CSSVarsProvider>
-  // )
+export function NextThemeProvider({
+  children,
+  ...props
+}: PropsWithChildren<ThemeProviderProps>) {
+  return <ThemeProvider {...props}>{children}</ThemeProvider>
 }

@@ -1,3 +1,6 @@
 export * from "./JoyrideProvider"
 export * from "./NotificationProvider"
 export * from "./ThemeSwitch"
+export * from "./Header"
+export * from "./Footer"
+export * from "./PageTransitionProvider"

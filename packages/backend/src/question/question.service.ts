@@ -3,7 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Question } from './entities/question.entity'
 import { Repository } from 'typeorm'
 import { publicProcedure, router } from '@server/trpc'
-import { createQuestionSchema } from './schema/create.schema'
+import {
+  TCreateQuestionSchema,
+  createQuestionSchema,
+} from './schema/create.schema'
 
 @Injectable()
 export class QuestionService {
@@ -13,13 +16,20 @@ export class QuestionService {
   ) {}
 
   router = router({
-    create: publicProcedure.input(createQuestionSchema).query(({ input }) => {
-      return JSON.stringify(input)
-    }),
+    create: publicProcedure
+      .input(createQuestionSchema)
+      .query(async ({ input }) => {
+        return await this.create(input)
+      }),
   })
 
-  create() {
-    return 'This action adds a new question'
+  async create(data: TCreateQuestionSchema) {
+    const newQuestion = new Question()
+    newQuestion.text = data.text
+    newQuestion.type = data.type
+    newQuestion.variants = data.variants
+    newQuestion.answer = data.answer
+    return await this.questionRepo.save(newQuestion)
   }
 
   findAll() {

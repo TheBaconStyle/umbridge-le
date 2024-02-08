@@ -1,9 +1,6 @@
 "use client"
 
-import {
-  createTheme,
-  experimental_extendTheme as extendTheme,
-} from "@mui/material"
+import { createTheme } from "@mui/material"
 import { Roboto } from "next/font/google"
 
 const RobotoFont = Roboto({

@@ -1,11 +1,15 @@
 import { Box, CssBaseline, ThemeProvider } from "@mui/material"
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter"
-import { setTheme } from "@web/actions"
-import { InitialColorSchemeScript, themes } from "@web/theme"
+import { getTheme } from "@web/actions"
+import { NotificationProvider } from "@web/components"
+import {
+  ColorSchemeController,
+  NextThemeProvider,
+  darkTheme,
+  lightTheme,
+} from "@web/theme"
 import type { Metadata } from "next"
-import { cookies } from "next/headers"
 import { PropsWithChildren } from "react"
-import { ThemeVariant, darkTheme, lightTheme } from "../theme/theme"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,28 +17,27 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({ children }: PropsWithChildren) {
-  const usrCookies = cookies()
-  const userTheme = usrCookies.get("app-theme")
-  const themeKey = String(userTheme)
-  const hasTheme = Object.hasOwn(themes, themeKey)
-  if (!hasTheme) {
-    // await setTheme("light")
-  }
+  const userTheme = await getTheme()
   return (
-    <html lang="ru">
-      <InitialColorSchemeScript />
+    <html lang="ru" suppressHydrationWarning>
       <AppRouterCacheProvider options={{ key: "css", prepend: true }}>
-        <ThemeProvider theme={darkTheme}>
-          <Box
-            component="body"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              minHeight: "100vh",
-            }}
-          >
-            {children}
-          </Box>
+        <ThemeProvider theme={userTheme === "dark" ? darkTheme : lightTheme}>
+          <NotificationProvider>
+            <Box
+              component="body"
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                minHeight: "100vh",
+              }}
+            >
+              <NextThemeProvider enableSystem>
+                <ColorSchemeController currentTheme={userTheme} />
+                {children}
+              </NextThemeProvider>
+            </Box>
+          </NotificationProvider>
+
           <CssBaseline />
         </ThemeProvider>
       </AppRouterCacheProvider>
