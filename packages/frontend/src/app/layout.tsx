@@ -22,21 +22,21 @@ export default async function RootLayout({ children }: PropsWithChildren) {
     <html lang="ru" suppressHydrationWarning>
       <AppRouterCacheProvider options={{ key: "css", prepend: true }}>
         <ThemeProvider theme={userTheme === "dark" ? darkTheme : lightTheme}>
-          <NotificationProvider>
-            <Box
-              component="body"
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                minHeight: "100vh",
-              }}
-            >
+          <Box
+            component="body"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              minHeight: "100vh",
+            }}
+          >
+            <NotificationProvider>
               <NextThemeProvider enableSystem>
                 <ColorSchemeController currentTheme={userTheme} />
                 {children}
               </NextThemeProvider>
-            </Box>
-          </NotificationProvider>
+            </NotificationProvider>
+          </Box>
 
           <CssBaseline />
         </ThemeProvider>

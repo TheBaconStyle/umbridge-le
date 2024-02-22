@@ -1,6 +1,6 @@
 import { INestApplication, Injectable } from '@nestjs/common'
 import { QuestionService } from '@server/question/question.service'
-import { router, createContext } from '@server/trpc'
+import { router } from '@server/trpc'
 import * as trpcExpress from '@trpc/server/adapters/express'
 
 @Injectable()
@@ -14,7 +14,6 @@ export class AppService {
       '/trpc',
       trpcExpress.createExpressMiddleware({
         router: this.router,
-        createContext,
       }),
     )
   }

@@ -6,7 +6,7 @@ import { publicProcedure, router } from '@server/trpc'
 import {
   TCreateQuestionSchema,
   createQuestionSchema,
-} from './schema/create.schema'
+} from './schema/createQuestion.schema'
 
 @Injectable()
 export class QuestionService {
@@ -18,7 +18,7 @@ export class QuestionService {
   router = router({
     create: publicProcedure
       .input(createQuestionSchema)
-      .query(async ({ input }) => {
+      .mutation(async ({ input }) => {
         return await this.create(input)
       }),
   })

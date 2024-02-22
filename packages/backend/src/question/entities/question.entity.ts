@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
-import { questionTypeVariants } from '../schema/create.schema'
+import { questionTypeVariants } from '../schema/createQuestion.schema'
 
 @Entity()
 export class Question {
@@ -16,5 +16,5 @@ export class Question {
   variants?: string[]
 
   @Column('jsonb')
-  answer: string | number[] | number | Record<string, string>
+  answer: string | string[]
 }

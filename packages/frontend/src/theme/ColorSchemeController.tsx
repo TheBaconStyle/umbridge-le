@@ -13,14 +13,15 @@ export function ColorSchemeController({
 }: TColorSchemeController) {
   const { resolvedTheme } = useTheme()
   useEffect(() => {
-    ;(async () => {
+    const setResolvedTheme = async () => {
       if (
         resolvedTheme &&
         resolvedTheme !== "system" &&
         resolvedTheme !== currentTheme
       )
         setTheme(resolvedTheme)
-    })()
+    }
+    setResolvedTheme()
   }, [resolvedTheme, currentTheme])
   return null
 }

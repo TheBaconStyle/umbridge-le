@@ -4,7 +4,7 @@ import { DarkMode, LightMode, SettingsBrightness } from "@mui/icons-material"
 import { IconButton, Menu, MenuItem, PaletteMode, Tooltip } from "@mui/material"
 import { useTheme } from "next-themes"
 import { useRef } from "react"
-import { TernaryDarkMode, useBoolean, useTernaryDarkMode } from "usehooks-ts"
+import { useBoolean } from "usehooks-ts"
 
 const themeModes = [
   ["light", "Светлая"],

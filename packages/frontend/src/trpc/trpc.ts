@@ -1,10 +1,15 @@
 import { AppRouter } from "@server/app/app.service"
-import { createTRPCProxyClient, httpBatchLink } from "@trpc/client"
+import { createTRPCProxyClient, httpBatchLink, loggerLink } from "@trpc/client"
+import SuperJSON from "superjson"
 
 export const trpc = createTRPCProxyClient<AppRouter>({
   links: [
     httpBatchLink({
       url: `${process.env.API_URL}/trpc`,
     }),
+    loggerLink({
+      enabled: () => true,
+    }),
   ],
+  transformer: SuperJSON,
 })

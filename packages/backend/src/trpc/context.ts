@@ -1,7 +1,7 @@
 import * as trpcExpress from '@trpc/server/adapters/express'
+
 export async function createContext({
   req,
-  res,
 }: trpcExpress.CreateExpressContextOptions) {
   async function getUserFromHeader() {
     if (req.headers.authorization) {
