@@ -1,10 +1,10 @@
 import { Box } from "@mui/material"
-import { QuestionCreator } from "@web/components/QuestionCreator"
+import { QuestionEditor } from "@web/components"
 
 export default function Home() {
   return (
     <Box>
-      <QuestionCreator />
+      <QuestionEditor />
     </Box>
   )
 }

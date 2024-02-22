@@ -14,7 +14,7 @@ import {
   SingleVariants,
 } from "./variants"
 
-export type TQuestionCreator = {
+export type TQuestionEditor = {
   questionData?: {
     variants: Question["variants"]
     answer: Question["answer"]
@@ -24,7 +24,7 @@ export type TQuestionCreator = {
   }
 }
 
-export function QuestionCreator({ questionData }: TQuestionCreator) {
+export function QuestionEditor({ questionData }: TQuestionEditor) {
   const [variants, setVariants] = useState<Question["variants"]>(
     questionData?.variants ?? [],
   )

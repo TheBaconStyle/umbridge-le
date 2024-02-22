@@ -1,7 +1,7 @@
 "use client"
 
 import { Add, Remove } from "@mui/icons-material"
-import { Grid, IconButton, Paper, TextField, Typography } from "@mui/material"
+import { Grid, IconButton, TextField, Typography } from "@mui/material"
 import { Reorder } from "framer-motion"
 import { Dispatch, SetStateAction, useState } from "react"
 
@@ -12,6 +12,10 @@ export type TOrderVariants = {
 
 export function OrderVariants({ answer, setAnswer }: TOrderVariants) {
   const [varText, setVarText] = useState("")
+  const addVariant = () => {
+    setAnswer([...answer, varText])
+    setVarText("")
+  }
   return (
     <Grid container direction="column" spacing={2}>
       <Grid item>Добавить вариант</Grid>
@@ -21,14 +25,9 @@ export function OrderVariants({ answer, setAnswer }: TOrderVariants) {
           fullWidth
           label="Текст варианта"
           value={varText}
+          onKeyUp={(e) => e.key === "Enter" && addVariant()}
         />
-        <IconButton
-          color="primary"
-          onClick={() => {
-            setAnswer([...answer, varText])
-            setVarText("")
-          }}
-        >
+        <IconButton color="primary" onClick={addVariant}>
           <Add />
         </IconButton>
       </Grid>
