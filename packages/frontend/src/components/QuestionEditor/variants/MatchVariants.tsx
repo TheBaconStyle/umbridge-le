@@ -1,5 +1,3 @@
-"use client"
-
 import { Remove } from "@mui/icons-material"
 import { Grid, IconButton, TextField, Typography } from "@mui/material"
 import type { Question } from "@server/question/entities/question.entity"

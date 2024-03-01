@@ -1,5 +1,3 @@
-"use client"
-
 import { Remove } from "@mui/icons-material"
 import {
   Checkbox,

@@ -1,5 +1,3 @@
-"use client"
-
 import { Add, Remove } from "@mui/icons-material"
 import { Grid, IconButton, TextField, Typography } from "@mui/material"
 import { Reorder } from "framer-motion"

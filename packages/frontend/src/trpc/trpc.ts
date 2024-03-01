@@ -7,9 +7,6 @@ export const trpc = createTRPCProxyClient<AppRouter>({
     httpBatchLink({
       url: `${process.env.API_URL}/trpc`,
     }),
-    loggerLink({
-      enabled: () => true,
-    }),
   ],
   transformer: SuperJSON,
 })

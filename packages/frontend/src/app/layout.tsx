@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   const userTheme = await getTheme()
+
   return (
     <html lang="ru" suppressHydrationWarning>
       <AppRouterCacheProvider options={{ key: "css", prepend: true }}>
