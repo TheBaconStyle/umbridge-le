@@ -9,7 +9,7 @@ export const questionTypeVariants = [
 ] as const
 
 export const createQuestionSchema = z.object({
-  text: z.string(),
+  text: z.string().min(1),
   type: z.enum(questionTypeVariants),
   variants: z.string().array().optional(),
   answer: z.union([z.string().array().nonempty(), z.string()]),

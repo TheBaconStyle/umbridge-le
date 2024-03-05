@@ -7,6 +7,10 @@ import {
   TCreateQuestionSchema,
   createQuestionSchema,
 } from './schema/createQuestion.schema'
+import {
+  TUpdateQuestionSChema,
+  updateQuestionSchema,
+} from './schema/updateQuestion.schema'
 
 @Injectable()
 export class QuestionService {
@@ -18,33 +22,30 @@ export class QuestionService {
   router = router({
     create: publicProcedure
       .input(createQuestionSchema)
-      .mutation(async ({ input }) => {
-        return await this.create(input)
-      }),
+      .mutation(({ input }) => this.create(input)),
+    edit: publicProcedure
+      .input(updateQuestionSchema)
+      .mutation(({ input }) => this.update(input)),
   })
 
   async create(data: TCreateQuestionSchema) {
-    const newQuestion = new Question()
-    newQuestion.text = data.text
-    newQuestion.type = data.type
-    newQuestion.variants = data.variants
-    newQuestion.answer = data.answer
-    return await this.questionRepo.save(newQuestion)
+    const newQuestion = this.questionRepo.create(data)
+    return this.questionRepo.save(newQuestion)
   }
 
   findAll() {
     return `This action returns all question`
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} question`
+  findOne() {
+    return `This action returns one question`
   }
 
-  update(id: number) {
-    return `This action updates a #${id} question`
+  update({ id, ...data }: TUpdateQuestionSChema) {
+    return this.questionRepo.update(id, data)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} question`
+  remove(ids: number | number[]) {
+    return this.questionRepo.delete(ids)
   }
 }

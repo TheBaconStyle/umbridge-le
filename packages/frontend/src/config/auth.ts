@@ -1,5 +1,15 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+import async from "../actions/setTheme"
+
+const credProvider = CredentialsProvider({
+  name: "credentials",
+  credentials: {
+    identifier: { label: "Username", type: "text" },
+    password: { label: "Password", type: "password" },
+  },
+  async authorize(credentials, request) {},
+})
 
 const AuthConfig = {
   callbacks: {
@@ -21,20 +31,17 @@ const AuthConfig = {
       return token
     },
   },
-  providers: [
-    CredentialsProvider({
-      name: "credentials",
-      credentials: {
-        identifier: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" },
-      },
-      // async authorize(credentials, request) {},
-    }),
-  ],
+  providers: [],
   pages: { signIn: "/auth/signin" },
 }
 
 export const {
   handlers: { GET, POST },
   auth,
-} = NextAuth({ providers: [], callbacks: {}, pages: {} })
+} = NextAuth({
+  providers: [credProvider],
+  callbacks: {
+    async session({ session, token }) {},
+  },
+  pages: {},
+})
