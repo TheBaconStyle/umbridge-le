@@ -1,10 +1,21 @@
+import { Attempt } from '@server/attempt/entities/attempt.entity'
+import { Course } from '@server/course/entities/course.entity'
+import { Group } from '@server/group/entities/group.entity'
+import { Role } from '@server/role/entities/role.entity'
 import { compare, genSalt, hash } from 'bcrypt'
 import { IsEmail, IsNotEmpty, isStrongPassword } from 'class-validator'
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string
 
   @Column()
@@ -27,6 +38,18 @@ export class User {
 
   @Column()
   lastName: string
+
+  @ManyToMany(() => Role, (role) => role.users)
+  roles: Role[]
+
+  @ManyToOne(() => Group, (group) => group.students)
+  group: Group
+
+  @OneToMany(() => Course, (course) => course.teacher)
+  courses: Course[]
+
+  @OneToMany(() => Attempt, (attempt) => attempt.user)
+  attempts: Attempt[]
 
   getInitials() {
     return `${this.lastName} ${this.firstName.slice(

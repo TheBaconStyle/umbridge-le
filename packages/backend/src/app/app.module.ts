@@ -11,9 +11,7 @@ import { TaskModule } from '@server/task/task.module'
 import { existsSync } from 'fs'
 import { AppService } from './app.service'
 import { RoleModule } from '@server/role/role.module'
-import { SessionModule } from '@server/session/session.module'
-import { StudentModule } from '@server/student/student.module'
-import { TeacherModule } from '@server/teacher/teacher.module'
+import { TaskSessionModule } from '@server/task-session/task-session.module'
 
 @Module({
   imports: [
@@ -44,10 +42,8 @@ import { TeacherModule } from '@server/teacher/teacher.module'
     QuestionModule,
     QuestionOrderModule,
     RoleModule,
-    SessionModule,
-    StudentModule,
+    TaskSessionModule,
     TaskModule,
-    TeacherModule,
   ],
   providers: [AppService],
 })

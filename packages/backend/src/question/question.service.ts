@@ -33,13 +33,9 @@ export class QuestionService {
     return this.questionRepo.save(newQuestion)
   }
 
-  findAll() {
-    return `This action returns all question`
-  }
+  findAll = this.questionRepo.find
 
-  findOne() {
-    return `This action returns one question`
-  }
+  findOne = this.questionRepo.findOne
 
   update({ id, ...data }: TUpdateQuestionSChema) {
     return this.questionRepo.update(id, data)

@@ -18,7 +18,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "migration:create": "typeorm migration:create",
     "migration:generate": "typeorm migration:generate -d dist/ormconfig.js",
-    "migration:run": "typeorm migration:run -d dist/ormconfig.js"
+    "migration:run": "typeorm migration:run -d dist/ormconfig.js",
+    "migration:show": "typeorm migration:show -d dist/ormconfig.js",
+    "migration:revert": "typeorm migration:revert -d dist/ormconfig.js"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

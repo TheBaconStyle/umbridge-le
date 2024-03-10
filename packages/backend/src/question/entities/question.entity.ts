@@ -1,5 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Task } from '@server/task/entities/task.entity'
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
 import { questionTypeVariants } from '../schema/createQuestion.schema'
+import { QuestionOrder } from '@server/question-order/entities/question-order.entity'
 
 @Entity()
 export class Question {
@@ -17,4 +25,10 @@ export class Question {
 
   @Column('jsonb')
   answer: string | string[]
+
+  @ManyToOne(() => Task, (task) => task.questions)
+  task: Task
+
+  @OneToMany(() => QuestionOrder, (order) => order.question)
+  orders: QuestionOrder[]
 }
