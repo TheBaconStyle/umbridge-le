@@ -11,7 +11,7 @@ import { QuestionOrder } from '@server/question-order/entities/question-order.en
 
 @Entity()
 export class Question {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number
 
   @Column()

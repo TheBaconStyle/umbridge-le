@@ -2,8 +2,8 @@ import { Attempt } from '@server/attempt/entities/attempt.entity'
 import { Course } from '@server/course/entities/course.entity'
 import { Group } from '@server/group/entities/group.entity'
 import { Role } from '@server/role/entities/role.entity'
-import { compare, genSalt, hash } from 'bcrypt'
-import { IsEmail, IsNotEmpty, isStrongPassword } from 'class-validator'
+import { Exclude } from 'class-transformer'
+import { IsEmail, IsNotEmpty } from 'class-validator'
 import {
   Column,
   Entity,
@@ -25,19 +25,20 @@ export class User {
 
   @Column()
   @IsNotEmpty({ message: 'Empty password is not allowed' })
-  private passwordHash: string
+  @Exclude()
+  password: string
 
   @Column({ nullable: true })
   resetToken: string
 
   @Column()
-  firstName: string
+  firstName?: string
 
   @Column()
-  middleName: string
+  middleName?: string
 
   @Column()
-  lastName: string
+  lastName?: string
 
   @ManyToMany(() => Role, (role) => role.users)
   roles: Role[]
@@ -50,26 +51,4 @@ export class User {
 
   @OneToMany(() => Attempt, (attempt) => attempt.user)
   attempts: Attempt[]
-
-  getInitials() {
-    return `${this.lastName} ${this.firstName.slice(
-      0,
-      2,
-    )}. ${this.middleName.slice(0, 2)}.`
-  }
-
-  getFullName() {
-    return `${this.lastName} ${this.firstName} ${this.middleName}`
-  }
-
-  validatePassword(password: string) {
-    return compare(password, this.passwordHash)
-  }
-
-  async updatePassword(newPassword: string) {
-    if (!isStrongPassword(newPassword)) return false
-    const salt = await genSalt(Number(process.env.SALT_ROUNDS) ?? 12)
-    this.passwordHash = await hash(newPassword, salt)
-    return true
-  }
 }

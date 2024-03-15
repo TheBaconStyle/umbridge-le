@@ -2,7 +2,6 @@ import { Logger, Module, OnApplicationBootstrap } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { AttemptModule } from '@server/attempt/attempt.module'
-import { AuthModule } from '@server/auth/auth.module'
 import { CourseModule } from '@server/course/course.module'
 import { GroupModule } from '@server/group/group.module'
 import { QuestionOrderModule } from '@server/question-order/question-order.module'
@@ -12,6 +11,7 @@ import { existsSync } from 'fs'
 import { AppService } from './app.service'
 import { RoleModule } from '@server/role/role.module'
 import { TaskSessionModule } from '@server/task-session/task-session.module'
+import { UserModule } from '@server/user/user.module'
 
 @Module({
   imports: [
@@ -36,7 +36,6 @@ import { TaskSessionModule } from '@server/task-session/task-session.module'
       },
     }),
     AttemptModule,
-    AuthModule,
     CourseModule,
     GroupModule,
     QuestionModule,
@@ -44,6 +43,7 @@ import { TaskSessionModule } from '@server/task-session/task-session.module'
     RoleModule,
     TaskSessionModule,
     TaskModule,
+    UserModule,
   ],
   providers: [AppService],
 })
