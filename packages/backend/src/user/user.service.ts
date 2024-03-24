@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common'
 import { Repository } from 'typeorm'
 import { User } from './entities/user.entity'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -7,6 +11,7 @@ import { compare, genSalt, hash } from 'bcrypt'
 import { isStrongPassword } from 'class-validator'
 import { publicProcedure, router } from '@server/trpc'
 import { instanceToPlain } from 'class-transformer'
+import { signInSchema } from './schema/signIn.schema'
 
 @Injectable()
 export class UserService {
@@ -18,6 +23,16 @@ export class UserService {
     create: publicProcedure
       .input(createUserSchema)
       .mutation(({ input }) => this.create(input)),
+    signIn: publicProcedure
+      .input(signInSchema)
+      .mutation(async ({ input: { email, password } }) => {
+        const user = await this.findOne({ where: { email } })
+        if (!user)
+          throw new UnauthorizedException('User with this email does not exist')
+        if (!(await this.validatePassword(user, password)))
+          throw new UnauthorizedException('Incorrect email or password')
+        return instanceToPlain(user)
+      }),
   })
 
   async create({ password, ...data }: TCreateUserSchema) {
@@ -27,21 +42,15 @@ export class UserService {
     return instanceToPlain(this.userRepo.save(newUser))
   }
 
-  findAll() {
-    return `This action returns all users`
+  findAll = this.userRepo.find
+
+  findOne = this.userRepo.findOne
+
+  update(id: string, data: Partial<User>) {
+    return this.userRepo.update({ id }, data)
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`
-  }
-
-  update(id: number) {
-    return `This action updates a #${id} user`
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`
-  }
+  remove = this.userRepo.remove
 
   getInitials(user: User) {
     const firstInitial = user.firstName

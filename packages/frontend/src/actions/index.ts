@@ -1,6 +1,5 @@
-export * from "./setTheme"
-export * from "./getPathname"
-export * from "./getTheme"
+export * from "./theme"
+export * from "./url"
 export * from "./createQuestion"
 export * from "./createUser"
 

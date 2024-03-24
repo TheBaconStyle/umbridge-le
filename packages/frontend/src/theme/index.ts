@@ -1,3 +1,3 @@
 export * from "./ColorSchemeController"
-export * from "./ThemeProvider"
+export * from "./NextThemeProvider"
 export * from "./theme"

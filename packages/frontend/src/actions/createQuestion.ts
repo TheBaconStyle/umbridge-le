@@ -4,14 +4,14 @@ import type { TCreateQuestionSchema } from "@server/question/schema/createQuesti
 import { trpc } from "@web/trpc"
 import { TTRPCActionReturn } from "."
 
-type TCrtQuestionReturn = TTRPCActionReturn<
+type TCreateQuestionReturn = TTRPCActionReturn<
   Awaited<ReturnType<typeof trpc.questions.create.mutate>>
 >
 
 export async function createQuestion(
   questionData: TCreateQuestionSchema,
   date: number,
-): Promise<TCrtQuestionReturn> {
+): Promise<TCreateQuestionReturn> {
   console.log(date)
   try {
     const data = await trpc.questions.create.mutate(questionData)

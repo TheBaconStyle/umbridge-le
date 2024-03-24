@@ -2,6 +2,7 @@ import { Box, CssBaseline, ThemeProvider } from "@mui/material"
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter"
 import { getTheme } from "@web/actions"
 import { NotificationProvider } from "@web/components"
+import { AuthProvider } from "@web/config"
 import {
   ColorSchemeController,
   NextThemeProvider,
@@ -21,27 +22,29 @@ export default async function RootLayout({ children }: PropsWithChildren) {
 
   return (
     <html lang="ru" suppressHydrationWarning>
-      <AppRouterCacheProvider options={{ key: "css", prepend: true }}>
-        <ThemeProvider theme={userTheme === "dark" ? darkTheme : lightTheme}>
-          <Box
-            component="body"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              minHeight: "100vh",
-            }}
-          >
-            <NotificationProvider>
-              <NextThemeProvider enableSystem>
-                <ColorSchemeController currentTheme={userTheme} />
-                {children}
-              </NextThemeProvider>
-            </NotificationProvider>
-          </Box>
+      <AuthProvider>
+        <AppRouterCacheProvider options={{ key: "css", prepend: true }}>
+          <ThemeProvider theme={userTheme === "dark" ? darkTheme : lightTheme}>
+            <Box
+              component="body"
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                minHeight: "100vh",
+              }}
+            >
+              <NotificationProvider>
+                <NextThemeProvider enableSystem>
+                  <ColorSchemeController currentTheme={userTheme} />
+                  {children}
+                </NextThemeProvider>
+              </NotificationProvider>
+            </Box>
 
-          <CssBaseline />
-        </ThemeProvider>
-      </AppRouterCacheProvider>
+            <CssBaseline />
+          </ThemeProvider>
+        </AppRouterCacheProvider>
+      </AuthProvider>
     </html>
   )
 }
